@@ -253,7 +253,28 @@ const productSchema = new mongoose.Schema({
         type: Number,
         default: 0,
     },
-    offerDescription: String,
+    offerDescriptionBase: {
+        type: String,
+        default: "",
+    },
+    offerDescription: {
+        ar: {
+            type: String,
+            default: "",
+        },
+        en: {
+            type: String,
+            default: "",
+        },
+        de: {
+            type: String,
+            default: "",
+        },
+        tr: {
+            type: String,
+            default: "",
+        },
+    },
     numberOfOrders: {
         type: Number,
         default: 0,
@@ -264,7 +285,7 @@ const productSchema = new mongoose.Schema({
     },
     countries: {
         type: Array,
-        default: ["KW"],
+        default: ["TR"],
     },
     ratings: {
         type: Object,
@@ -338,16 +359,13 @@ const userSchema = new mongoose.Schema({
         },
         country: {
             type: String,
-            default: "KW",
+            default: "TR",
         },
         streetAddress: {
             type: String,
             default: "",
         },
-        apartmentNumber: {
-            type: Number,
-            default: 1,
-        },
+        apartmentNumber: Number,
         city: {
             type: String,
             default: "",
@@ -356,10 +374,7 @@ const userSchema = new mongoose.Schema({
             type: String,
             default: "",
         },
-        phoneNumber: {
-            type: String,
-            default: "0096560048235",
-        },
+        phoneNumber: String,
         email: {
             type: String,
             default: "",
@@ -380,16 +395,13 @@ const userSchema = new mongoose.Schema({
         },
         country: {
             type: String,
-            default: "KW",
+            default: "TR",
         },
         streetAddress: {
             type: String,
             default: "",
         },
-        apartmentNumber: {
-            type: Number,
-            default: 1,
-        },
+        apartmentNumber: Number,
         city: {
             type: String,
             default: "",
@@ -398,10 +410,7 @@ const userSchema = new mongoose.Schema({
             type: String,
             default: "",
         },
-        phoneNumber: {
-            type: String,
-            default: "0096560048235",
-        },
+        phoneNumber: String,
         email: {
             type: String,
             default: "",
@@ -556,6 +565,10 @@ const orderSchema = new mongoose.Schema({
             "paypal",
             "stripe"
         ],
+    },
+    orderPaymentGatewayId: {
+        type: String,
+        default: ""
     },
     status: {
         type: String,
@@ -744,12 +757,12 @@ const orderSchema = new mongoose.Schema({
     shippingMethod: {
         forLocalProducts: {
             type: String,
-            enum: ["normal", "ubuyblues"],
+            enum: ["ciratco"],
             required: true
         },
         forInternationalProducts: {
             type: String,
-            enum: ["normal", "fast"],
+            enum: ["ciratco"],
             required: true
         }
     },
