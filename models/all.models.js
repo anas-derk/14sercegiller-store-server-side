@@ -754,12 +754,12 @@ const orderSchema = new mongoose.Schema({
     shippingMethod: {
         forLocalProducts: {
             type: String,
-            enum: ["ciratco"],
+            enum: ["sercegiller"],
             required: true
         },
         forInternationalProducts: {
             type: String,
-            enum: ["ciratco"],
+            enum: ["sercegiller"],
             required: true
         }
     },

@@ -148,12 +148,12 @@ function validateIsExistErrorInFiles(req, res, next) {
 
 function validateShippingMethod(req, res, next) {
     const shippingMethod = req.body.shippingMethod;
-    if (!["normal", "ubuyblues"].includes(shippingMethod.forLocalProducts)) {
-        res.status(400).json(getResponseObject("Sorry Shipping Method For Local Products Is Not Valid ( Please Send 'normal' or 'ubuyblues' Value )", true, {}));
+    if (!["sercegiller"].includes(shippingMethod.forLocalProducts)) {
+        res.status(400).json(getResponseObject("Sorry Shipping Method For Local Products Is Not Valid ( Please Send 'sercegiller' Value )", true, {}));
         return;
     }
-    if (!["normal", "fast"].includes(shippingMethod.forInternationalProducts)) {
-        res.status(400).json(getResponseObject("Sorry Shipping Method For International Products Is Not Valid ( Please Send 'normal' or 'fast' Value )", true, {}));
+    if (!["sercegiller"].includes(shippingMethod.forInternationalProducts)) {
+        res.status(400).json(getResponseObject("Sorry Shipping Method For International Products Is Not Valid ( Please Send 'sercegiller' Value )", true, {}));
         return;
     }
     next();
@@ -184,7 +184,7 @@ function validateOrderCreator(orderCreator, res, nextFunc) {
 }
 
 function validatePaymentGateway(paymentGate, res, nextFunc) {
-    if (!["tap", "tabby", "binance"].includes(paymentGate)) {
+    if (!["paypal", "stripe"].includes(paymentGate)) {
         res.status(400).json(getResponseObject("Please Send Valid Payment Gateway !!", true, {}));
         return;
     }

@@ -118,38 +118,7 @@ async function postNewPaymentOrder(req, res) {
             return res.json(result);
         }
         else {
-            if (orderData.paymentGateway === "paypal") {
-                result = (await post(`${process.env.PAYPAL_BASE_API_URL}/v1/oauth2/token`, {
-                    "grant_type": "client_credentials"
-                }, {
-                    headers: {
-                        "Content-Type": "application/x-www-form-urlencoded",
-                        "Authorization": `Basic ${Buffer.from(`${process.env.PAYPAL_API_USER_NAME}:${process.env.PAYPAL_API_PASSWORD}`).toString("base64")}`
-                    }
-                })).data;
-                result = (await post(`${process.env.PAYPAL_BASE_API_URL}/v2/checkout/orders`, {
-                    "intent": "CAPTURE",
-                    "purchase_units": [
-                        {
-                            "amount": {
-                                "currency_code": "USD",
-                                "value": result.data.orderAmount
-                            }
-                        }
-                    ],
-                    "application_context": {
-                        "return_url": `${process.env.NODE_ENV === "test" ? `http://localhost:3000/confirmation/${result.data._id}?country=${req.query.country}` : process.env.WEBSITE_URL}/confirmation/${result.data._id}?country=${req.query.country}`,
-                        "cancel_url": `${process.env.NODE_ENV === "test" ? `http://localhost:3000/checkout/${result.data._id}?country=${req.query.country}` : process.env.WEBSITE_URL}/checkout/${result.data._id}?country=${req.query.country}`
-                    }
-                }, {
-                    headers: {
-                        Authorization: `Bearer ${result.access_token}`
-                    }
-                })).data;
-                return res.json(getResponseObject(getSuitableTranslations("Creating New Payment Order By Tap Process Has Been Successfully !!", language), false, {
-                    paymentURL: result.links[1].href
-                }));
-            }
+            return res.json(getResponseObject(getSuitableTranslations("Creating New Payment Order Process Has Been Successfully !!", language), false, result.data));
         }
     }
     catch (err) {
