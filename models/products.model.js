@@ -2,7 +2,7 @@
 
 const { productModel, categoryModel, adminModel, mongoose, favoriteProductModel } = require("../models/all.models");
 
-const { getSuitableTranslations } = require("../global/functions");
+const { getSuitableTranslations, translateSentensesByAPI } = require("../global/functions");
 
 async function addNewProduct(authorizationId, productInfo, language) {
     try {
