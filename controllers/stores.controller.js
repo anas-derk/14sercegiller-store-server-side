@@ -272,7 +272,13 @@ async function deleteRejectStore(req, res) {
             return res.json(result);
         }
         unlinkSync(result.data.storeImagePath);
-        res.json(await sendRejectStoreEmail(result.data.ownerEmail, result.data.language));
+        res.json(result);
+        try {
+            await sendRejectStoreEmail(result.data.ownerEmail, result.data.language);
+        }
+        catch (err) {
+            console.log(err);
+        }
     }
     catch (err) {
         res.status(500).json(getResponseObject(getSuitableTranslations("Internal Server Error !!", req.query.language), true, {}));
